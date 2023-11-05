@@ -1,0 +1,39 @@
+# Spring Boot configuration
+spring:
+  application:
+    name: Server
+
+  # Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/daedalus
+    username: postgres
+    password: postgres
+
+  # JPA properties
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# Logger configuration
+logging:
+  level:
+    org.springframework: [ info, debug, warn ]
+    org.hibernate.stat: debug
+    org.hibernate.sql: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+
+# Server configuration
+server:
+  port: 8080
+  error:
+    include-binding-errors: always
+    include-message: always
