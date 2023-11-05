@@ -1,5 +1,6 @@
 package com.drocketeers.server.controller;
 
+import com.drocketeers.server.dto.VoteDTO;
 import com.drocketeers.server.service.VoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,8 @@ public class VoteController {
     private final VoteService voteService;
 
     @PostMapping
-    public ResponseEntity<Object> setVote(@RequestParam("user") Long userId,
-                                        @RequestParam("team") Long teamId) {
-        voteService.setVote(userId, teamId);
+    public ResponseEntity<Object> setVote(@RequestBody VoteDTO voteDto) {
+        voteService.setVote(voteDto.userId(), voteDto.teamId());
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

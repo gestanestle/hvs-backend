@@ -1,5 +1,6 @@
 package com.drocketeers.server.repository;
 
+import com.drocketeers.server.model.Participant;
 import com.drocketeers.server.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -8,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface ParticipantRepository extends JpaRepository<Participant, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.username = ?1")
-    Optional<User> findByUsername(String username);
+    @Query("SELECT p FROM Participant p WHERE p.user= ?1")
+    Optional<Participant> getParticipant(User user);
 
 }

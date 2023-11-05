@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     @Query("SELECT v FROM Vote v WHERE v.votedBy = ?1")
-    Optional<Vote> getVoteByUser(User user);
+    Optional<Vote> getVoteByUser(User User);
 
 }

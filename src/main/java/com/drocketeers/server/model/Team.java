@@ -17,15 +17,15 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long teamId;
     @OneToMany(fetch = FetchType.EAGER)
-    public Set<User> members;
+    public Set<Participant> members;
     public Integer votes;
 
-    public Team(Set<User> members, Integer votes) {
+    public Team(Set<Participant> members, Integer votes) {
         this.members = members;
         this.votes = votes;
     }
 
-    public static Team create(Set<User> members) {
+    public static Team create(Set<Participant> members) {
         return new Team(members, 0);
     }
 
