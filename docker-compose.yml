@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   postgres:
-    container_name: backend_db
+    container_name: hvs_pg
     image: postgres:15-alpine
     ports:
       - "5432:5432"
@@ -12,7 +12,15 @@ services:
       - POSTGRES_DB=daedalus
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-
+  app:
+    container_name: hvs_app
+    image: gestanestle/server:1.0
+    ports:
+      - "8080:8080"
+    networks:
+      - backend-network
+    environment:
+      - PG_HOST=postgres
 
 networks:
   backend-network:

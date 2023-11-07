@@ -1,9 +1,11 @@
 package com.drocketeers.server.service;
 
 import com.drocketeers.server.dto.user.payload.UserData;
+import com.drocketeers.server.exception.ApiException;
 import com.drocketeers.server.model.User;
 import com.drocketeers.server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -26,6 +28,9 @@ class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserData userData) {
+        if (userRepository.findByUsername(userData.username()).isPresent())
+            throw new ApiException(HttpStatus.BAD_REQUEST, "Username must be unique.");
+
         String primaryEmail = userData.email_addresses().stream()
                 .filter(e -> e.id().equals(userData.primary_email_address_id()))
                 .findFirst().get().email_address();

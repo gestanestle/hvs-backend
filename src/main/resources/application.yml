@@ -6,7 +6,7 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/daedalus
+    url: jdbc:postgresql://${pg.host}:5432/daedalus
     username: postgres
     password: postgres
 
@@ -22,6 +22,9 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+# Postgres host
+pg.host: localhost
 
 # Logger configuration
 logging:
