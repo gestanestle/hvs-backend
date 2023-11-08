@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Objects;
 
 public interface UserService {
 
@@ -28,8 +29,7 @@ class UserServiceImpl implements UserService {
 
     @Override
     public void createUser(UserData userData) {
-        if (userRepository.findByUsername(userData.username()).isPresent())
-            throw new ApiException(HttpStatus.BAD_REQUEST, "Username must be unique.");
+        if (userRepository.findByUsername(userData.username()).isPresent()) throw new ApiException(HttpStatus.BAD_REQUEST, "Username must be unique.");
 
         String primaryEmail = userData.email_addresses().stream()
                 .filter(e -> e.id().equals(userData.primary_email_address_id()))

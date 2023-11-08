@@ -39,17 +39,19 @@ public class StartupRunner implements ApplicationRunner {
 
         Set<Participant> team = new HashSet<>();
         Arrays.stream(usernames).forEach((u) -> {
-            if(userRepository.findByUsername(u).isPresent()) return;
+            log.info("=========" + userRepository.findByUsername(u).isEmpty());
+            if(userRepository.findByUsername("mock_data".concat(u)).isPresent()) return;
             User user = userRepository.saveAndFlush(new User(null, ("mock_data").concat(u), null, null, null, null, null, LocalDateTime.now()));
             Participant participant = participantRepository.saveAndFlush(new Participant(user));
             if (team.size() == 5) {
-                teamRepository.save(Team.create(team));
+                teamRepository.save(Team.create("team_name", team));
                 log.info("Creating team..." + team);
                 team.clear();
             }
             team.add(participant);
         } );
 
+        userRepository.findAll().forEach(user -> log.info(user.getUsername()));
 
     }
 }
