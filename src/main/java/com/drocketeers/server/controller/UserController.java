@@ -1,6 +1,7 @@
 package com.drocketeers.server.controller;
 
 import com.drocketeers.server.dto.user.Event;
+import com.drocketeers.server.model.User;
 import com.drocketeers.server.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,5 +26,10 @@ public class UserController {
         }
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(path = "{username}")
+    ResponseEntity<User> getUserByAuthId(@PathVariable("username") String username) {
+        return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
     }
 }

@@ -8,11 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface ParticipantService {
     List<Participant> getAllParticipants();
-    Participant getParticipantByUserId(Long userId);
+    Optional<Participant> getParticipantByUserId(Long userId);
 }
 
 @Service
@@ -29,8 +30,8 @@ class ParticipantServiceImpl implements ParticipantService {
     }
 
     @Override
-    public Participant getParticipantByUserId(Long userId) {
+    public Optional<Participant> getParticipantByUserId(Long userId) {
         User user = userService.getUserById(userId);
-        return participantRepository.getParticipant(user).get();
+        return Optional.ofNullable(participantRepository.getParticipant(user));
     }
 }

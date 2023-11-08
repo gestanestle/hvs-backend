@@ -18,7 +18,7 @@ public class Vote {
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     public User votedBy;
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "team_id")
     public Team votedFor;
 

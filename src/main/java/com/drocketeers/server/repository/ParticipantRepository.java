@@ -12,6 +12,6 @@ import java.util.Optional;
 public interface ParticipantRepository extends JpaRepository<Participant, Long> {
 
     @Query("SELECT p FROM Participant p WHERE p.user= ?1")
-    Optional<Participant> getParticipant(User user);
+    Participant getParticipant(User user);
 
 }

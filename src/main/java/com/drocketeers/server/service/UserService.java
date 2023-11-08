@@ -11,14 +11,12 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Objects;
 
 public interface UserService {
 
     void createUser(UserData userData);
     User getUserById(Long id);
     User getUserByUsername(String username);
-
 }
 
 @Service
