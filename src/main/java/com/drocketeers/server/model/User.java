@@ -53,5 +53,18 @@ public class User {
         return Objects.hash(userId, authId, username, email, birthdate, lastName, firstName, profileImageURL, createdAt);
     }
 
-
+    @Override
+    public String toString() {
+        return "User { " +
+                "userId: " + userId +
+                ", authId: '" + authId + '\'' +
+                ", username: '" + username + '\'' +
+                ", email: '" + email + '\'' +
+                ", birthdate: '" + birthdate + '\'' +
+                ", lastName: '" + lastName + '\'' +
+                ", firstName: '" + firstName + '\'' +
+                ", profileImageURL: '" + profileImageURL + '\'' +
+                ", createdAt: " + createdAt +
+                " }";
+    }
 }

@@ -6,7 +6,7 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${pg.host}:5432/daedalus
+    url: jdbc:postgresql://${pg.host}:54321/daedalus
     username: postgres
     password: postgres
 
@@ -36,7 +36,7 @@ logging:
 
 # Server configuration
 server:
-  port: 8080
+  port: 8081
   error:
     include-binding-errors: always
     include-message: always

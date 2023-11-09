@@ -1,9 +1,9 @@
 package com.drocketeers.server;
 
+import com.drocketeers.server.model.Hackathon;
 import com.drocketeers.server.model.Team;
-import com.drocketeers.server.model.Participant;
 import com.drocketeers.server.model.User;
-import com.drocketeers.server.repository.ParticipantRepository;
+import com.drocketeers.server.repository.HackathonRepository;
 import com.drocketeers.server.repository.TeamRepository;
 import com.drocketeers.server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 
 import java.time.LocalDateTime;
+import java.time.Month;
 import java.util.*;
 
 @Configuration
@@ -21,13 +22,15 @@ import java.util.*;
 public class StartupRunner implements ApplicationRunner {
 
     private final UserRepository userRepository;
-    private final ParticipantRepository participantRepository;
+    private final HackathonRepository hackathonRepository;
     private final TeamRepository teamRepository;
 
     Logger log = LoggerFactory.getLogger(StartupRunner.class);
     @Override
     public void run(ApplicationArguments args) {
         log.info("Startup Runner running...");
+
+        if (hackathonRepository.getBySeason(1).isPresent()) return;
 
         String [] usernames = {
                 "krimeu", "benok", "MacAngel23", "Annie", "boybee",
@@ -37,21 +40,49 @@ public class StartupRunner implements ApplicationRunner {
                 "shelledfish", "getgian", "thermo_ecs", "asbeelzebub", "dev.enigma"
         };
 
-        Set<Participant> team = new HashSet<>();
+        Hackathon hackathonS1 = hackathonRepository.saveAndFlush(
+                Hackathon.create("Hackathon Season 1", 1,
+                        LocalDateTime.of(2023, Month.OCTOBER, 31, 0, 0),
+                        LocalDateTime.of(2023, Month.NOVEMBER, 4, 0, 0),
+                        LocalDateTime.of(2023, Month.NOVEMBER, 12, 0, 0),
+                        "Description of season 1 of Daedalus Hackathon",
+                        null));
+
+        Set<User> participants = hackathonS1.getParticipants();
+        Set<User> team = new HashSet<>();
         Arrays.stream(usernames).forEach((u) -> {
-            log.info("=========" + userRepository.findByUsername(u).isEmpty());
-            if(userRepository.findByUsername("mock_data".concat(u)).isPresent()) return;
-            User user = userRepository.saveAndFlush(new User(null, ("mock_data").concat(u), null, null, null, null, null, LocalDateTime.now()));
-            Participant participant = participantRepository.saveAndFlush(new Participant(user));
+            String username = ("mock_data").concat(u);
+
+            log.info(String.valueOf(userRepository.findByUsername(username).isPresent()));
+
+            User user = userRepository.findByUsername(username).isPresent()
+                    ? userRepository.findByUsername(username).get()
+                    : userRepository.saveAndFlush(new User(null, username,
+                    null, null, null, null, null, LocalDateTime.now()));
+
+            participants.add(user);
+
             if (team.size() == 5) {
-                teamRepository.save(Team.create("team_name", team));
+                teamRepository.save(Team.create("team_name", hackathonS1, team));
                 log.info("Creating team..." + team);
                 team.clear();
             }
-            team.add(participant);
+            team.add(user);
         } );
 
-        userRepository.findAll().forEach(user -> log.info(user.getUsername()));
+        hackathonS1.setParticipants(participants);
+        hackathonRepository.save(hackathonS1);
 
+        if (hackathonRepository.getBySeason(2).isPresent()) return;
+
+        Hackathon hackathonS2 = hackathonRepository.saveAndFlush(
+                Hackathon.create("Hackathon Season 2", 2,
+                        LocalDateTime.of(2024, Month.JANUARY, 31, 0, 0),
+                        LocalDateTime.of(2024, Month.FEBRUARY, 4, 0, 0),
+                        LocalDateTime.of(2024, Month.FEBRUARY, 12, 0, 0),
+                        "Description of season 2 of Daedalus Hackathon",
+                        null));
+
+        hackathonRepository.save(hackathonS2);
     }
 }

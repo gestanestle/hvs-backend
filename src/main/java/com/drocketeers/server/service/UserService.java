@@ -17,6 +17,8 @@ public interface UserService {
     void createUser(UserData userData);
     User getUserById(Long id);
     User getUserByUsername(String username);
+
+    void deleteUserById(Long id);
 }
 
 @Service
@@ -52,5 +54,9 @@ class UserServiceImpl implements UserService {
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow();
     }
-    
+
+    @Override
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
+    }
 }

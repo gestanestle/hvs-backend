@@ -18,13 +18,14 @@ public class VoteController {
 
     @PostMapping
     public ResponseEntity<Object> setVote(@RequestBody VoteDTO voteDto) {
-        voteService.setVote(voteDto.userId(), voteDto.teamId());
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        voteService.setVote(voteDto.hackathonId(), voteDto.userId(), voteDto.teamId());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, Boolean>> userHasVote(@RequestParam("user") Long userId) {
-        boolean hasVote = voteService.hasVote(userId);
+    public ResponseEntity<Map<String, Boolean>> userHasVote(@RequestParam("hackathon") Long hackathonId,
+                                                            @RequestParam("user") Long userId) {
+        boolean hasVote = voteService.hasVote(hackathonId, userId);
         return new ResponseEntity<>(Map.of("hasVote", hasVote), HttpStatus.OK);
     }
 }

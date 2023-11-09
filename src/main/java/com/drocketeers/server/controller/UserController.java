@@ -29,7 +29,13 @@ public class UserController {
     }
 
     @GetMapping(path = "{username}")
-    ResponseEntity<User> getUserByAuthId(@PathVariable("username") String username) {
+    ResponseEntity<User> getUserByUsername(@PathVariable("username") String username) {
         return new ResponseEntity<>(userService.getUserByUsername(username), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "{id}")
+    ResponseEntity<Object> deleteUser(@PathVariable("id") Long id) {
+        userService.deleteUserById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

@@ -1,40 +1,64 @@
 package com.drocketeers.server.service;
 
+import com.drocketeers.server.dto.TeamDTO;
 import com.drocketeers.server.model.Team;
 import com.drocketeers.server.repository.TeamRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public interface TeamService {
 
-    List<Team> getAllTeams();
-    Team getTeamById(Long id);
-    void incrementTeamVotes(Long id);
+    List<TeamDTO> getAllTeams(Long hackathonId);
+    Team getTeamById(Long teamId);
+    TeamDTO getTeamByIdAndHackathon(Long hackathonId, Long teamId);
+    void incrementTeamVotes(Long teamId);
 
 }
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 class TeamServiceImpl implements TeamService {
 
     private final TeamRepository teamRepository;
 
     @Override
-    public List<Team> getAllTeams() {
-        return teamRepository.findAll();
+    public List<TeamDTO> getAllTeams(Long hackathonId) {
+
+        return teamRepository.getTeamsByHackathon(hackathonId).stream().map(this::mapToDTO).collect(Collectors.toList());
     }
 
     @Override
-    public Team getTeamById(Long id) {
-        return teamRepository.findById(id).orElseThrow();
+    public Team getTeamById(Long teamId) {
+        return teamRepository.findById(teamId).orElseThrow();
     }
 
     @Override
-    public void incrementTeamVotes(Long id) {
-        teamRepository.incrementVotes(id);
+    public TeamDTO getTeamByIdAndHackathon(Long hackathonId, Long teamId) {
+        Team team = teamRepository.getTeamByHackathonAndTeamId(hackathonId, teamId).orElseThrow();
+        return mapToDTO(team);
+    }
+
+    @Override
+    public void incrementTeamVotes(Long teamId) {
+        teamRepository.incrementVotes(teamId);
+    }
+
+    private TeamDTO mapToDTO(Team team) {
+        int sum = teamRepository.getSumOfVotes(team.hackathon.getHackathonId());
+        if (sum > 0) {
+            float quotient = (float) team.votes / (float) sum;
+            team.setVotePercentage((float) (quotient * 100.0));
+        }
+        log.info("Team votes: " + team.votes);
+        log.info("Sum of votes: " + sum);
+        log.info("Vote %: " + team.getVotePercentage());
+        return new TeamDTO(team.teamId, team.name, team.hackathon.getHackathonId(), team.members, team.votes, team.votePercentage, team.createdAt);
     }
 }
