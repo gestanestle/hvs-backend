@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 public interface VoteService {
     void setVote(Long hackathonId, Long userId, Long teamId);
-    boolean hasVote(Long hackathonId, Long userId);
+    Long getVote(Long hackathonId, Long userId);
 
 }
 
@@ -51,7 +51,10 @@ class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public boolean hasVote(Long hackathonId, Long userId) {
-        return voteRepository.getVoteByHackathonAndUser(hackathonId, userId).isPresent();
+    public Long getVote(Long hackathonId, Long userId) {
+        return
+                voteRepository.getVoteByHackathonAndUser(hackathonId, userId).isPresent()
+                        ? voteRepository.getVoteByHackathonAndUser(hackathonId, userId).get().votedFor.teamId
+                        : null;
     }
 }

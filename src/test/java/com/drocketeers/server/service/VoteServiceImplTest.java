@@ -92,8 +92,8 @@ class VoteServiceImplTest {
     }
 
     @Test
-    void hasVote() {
+    void getVote() {
         when(voteRepository.getVoteByHackathonAndUser(anyLong(), anyLong())).thenReturn(Optional.of(vote));
-        assertThat(voteService.hasVote(1L, 1L)).isEqualTo(true);
+        assertThat(voteService.getVote(1L, 1L)).isEqualTo(vote.votedFor.teamId);
     }
 }

@@ -23,9 +23,9 @@ public class VoteController {
     }
 
     @GetMapping
-    public ResponseEntity<Map<String, Boolean>> userHasVote(@RequestParam("hackathon") Long hackathonId,
+    public ResponseEntity<Map<String, Long>> getVote(@RequestParam("hackathon") Long hackathonId,
                                                             @RequestParam("user") Long userId) {
-        boolean hasVote = voteService.hasVote(hackathonId, userId);
-        return new ResponseEntity<>(Map.of("hasVote", hasVote), HttpStatus.OK);
+        long votedFor = voteService.getVote(hackathonId, userId);
+        return new ResponseEntity<>(Map.of("votedFor", votedFor), HttpStatus.OK);
     }
 }
