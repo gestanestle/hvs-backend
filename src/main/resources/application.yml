@@ -6,7 +6,7 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${pg.host}:54321/daedalus
+    url: jdbc:postgresql://${pg.host}:5432/daedalus
     username: postgres
     password: postgres
 

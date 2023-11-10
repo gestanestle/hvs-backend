@@ -16,7 +16,7 @@ services:
     container_name: hvs_app
     image: gestanestle/server:1.1
     ports:
-      - "8080:8080"
+      - "8081:8081"
     networks:
       - backend-network
     environment:
