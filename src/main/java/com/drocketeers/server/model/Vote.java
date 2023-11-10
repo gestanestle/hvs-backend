@@ -31,6 +31,18 @@ public class Vote {
     }
 
     @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Vote vote)) return false;
+        return Objects.equals(voteId, vote.voteId) && Objects.equals(hackathon, vote.hackathon) && Objects.equals(votedBy, vote.votedBy) && Objects.equals(votedFor, vote.votedFor);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(voteId, hackathon, votedBy, votedFor);
+    }
+
+    @Override
     public String toString() {
         return "Vote {" +
                 "voteId=" + voteId +

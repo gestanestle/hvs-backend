@@ -48,10 +48,14 @@ public class StartupRunner implements ApplicationRunner {
                         "Description of season 1 of Daedalus Hackathon",
                         null));
 
+        String [] teamNames = {"Team 1", "Team 2", "Team 3", "Team 4", "Team 5"};
+        Deque<String> q = new ArrayDeque<>(Arrays.asList(teamNames));
+
         Set<User> participants = hackathonS1.getParticipants();
         Set<User> team = new HashSet<>();
+
         Arrays.stream(usernames).forEach((u) -> {
-            String username = ("mock_data").concat(u);
+            String username = ("mock_data_").concat(u);
 
             log.info(String.valueOf(userRepository.findByUsername(username).isPresent()));
 
@@ -63,9 +67,10 @@ public class StartupRunner implements ApplicationRunner {
             participants.add(user);
 
             if (team.size() == 5) {
-                teamRepository.save(Team.create("team_name", hackathonS1, team));
+                teamRepository.save(Team.create(q.peekFirst(), hackathonS1, team));
                 log.info("Creating team..." + team);
                 team.clear();
+                q.removeFirst();
             }
             team.add(user);
         } );
