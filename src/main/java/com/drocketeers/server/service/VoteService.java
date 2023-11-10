@@ -52,9 +52,11 @@ class VoteServiceImpl implements VoteService {
 
     @Override
     public Long getVote(Long hackathonId, Long userId) {
-        return
-                voteRepository.getVoteByHackathonAndUser(hackathonId, userId).isPresent()
-                        ? voteRepository.getVoteByHackathonAndUser(hackathonId, userId).get().votedFor.teamId
-                        : null;
+        log.info("Voted for: " + hackathonId);
+        log.info("Voted by: " + userId);
+
+        boolean hasVote = voteRepository.getVoteByHackathonAndUser(hackathonId, userId).isPresent();
+
+        return hasVote ? voteRepository.getVoteByHackathonAndUser(hackathonId, userId).get().votedFor.teamId : null;
     }
 }

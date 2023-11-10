@@ -16,6 +16,7 @@ public class Vote {
     @GeneratedValue(strategy = GenerationType.AUTO)
     public Long voteId;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hackathon_Id")
     public Hackathon hackathon;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")

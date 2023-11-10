@@ -3,6 +3,7 @@ package com.drocketeers.server.service;
 import com.drocketeers.server.exception.ApiException;
 import com.drocketeers.server.model.*;
 import com.drocketeers.server.repository.VoteRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,10 +20,10 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+@Slf4j
 class VoteServiceImplTest {
 
     @Mock private HackathonService hackathonService;
@@ -95,5 +96,6 @@ class VoteServiceImplTest {
     void getVote() {
         when(voteRepository.getVoteByHackathonAndUser(anyLong(), anyLong())).thenReturn(Optional.of(vote));
         assertThat(voteService.getVote(1L, 1L)).isEqualTo(vote.votedFor.teamId);
+        verify(voteRepository, times(2)).getVoteByHackathonAndUser(anyLong(), anyLong());
     }
 }
