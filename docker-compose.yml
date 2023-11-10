@@ -14,23 +14,13 @@ services:
       - hvs_pg_data:/var/lib/postgresql/data
   hvs_app:
     container_name: hvs_app
-    image: gestanestle/server:1.0
+    image: gestanestle/server:1.1
     ports:
       - "8080:8080"
     networks:
       - backend-network
     environment:
       - PG_HOST=hvs_pg
-
-  pg_local:
-    container_name: pg_local
-    image: docker.io/postgres:15-alpine
-    ports:
-      - "54321:5432"
-    environment:
-      - POSTGRES_DB=daedalus
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
 
 networks:
   backend-network:
