@@ -18,7 +18,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
@@ -95,7 +94,7 @@ class VoteServiceImplTest {
     @Test
     void getVote() {
         when(voteRepository.getVoteByHackathonAndUser(anyLong(), anyLong())).thenReturn(Optional.of(vote));
-        assertThat(voteService.getVote(1L, 1L)).isEqualTo(vote.votedFor.teamId);
+        assertThat(voteService.getVote(1L, 1L)).isEqualTo(vote.getVotedFor().getTeamId());
         verify(voteRepository, times(2)).getVoteByHackathonAndUser(anyLong(), anyLong());
     }
 }

@@ -2,7 +2,9 @@ package com.drocketeers.server.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
@@ -10,20 +12,21 @@ import java.util.Objects;
 @Table(name = "VOTE")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter @Setter
 public class Vote {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long voteId;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private Long voteId;
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hackathon_Id")
-    public Hackathon hackathon;
+    private Hackathon hackathon;
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    public User votedBy;
-    @ManyToOne(fetch = FetchType.LAZY)
+    private User votedBy;
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")
-    public Team votedFor;
+    private Team votedFor;
 
     public Vote(Hackathon hackathon, User votedBy, Team votedFor) {
         this.hackathon = hackathon;
@@ -46,10 +49,10 @@ public class Vote {
     @Override
     public String toString() {
         return "Vote {" +
-                "voteId=" + voteId +
-                ", hackathon=" + hackathon +
-                ", votedBy=" + votedBy +
-                ", votedFor=" + votedFor +
+                "voteId= " + voteId +
+                ", hackathon= " + hackathon +
+                ", votedBy= " + votedBy +
+                ", votedFor= " + votedFor +
                 " }";
     }
 }

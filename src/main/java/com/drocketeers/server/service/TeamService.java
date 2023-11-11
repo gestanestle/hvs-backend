@@ -51,14 +51,15 @@ class TeamServiceImpl implements TeamService {
     }
 
     private TeamDTO mapToDTO(Team team) {
-        int sum = teamRepository.getSumOfVotes(team.hackathon.getHackathonId());
+        int sum = teamRepository.getSumOfVotes(team.getHackathon().getHackathonId());
         if (sum > 0) {
-            float quotient = (float) team.votes / (float) sum;
+            float quotient = (float) team.getVotes() / (float) sum;
             team.setVotePercentage((float) (quotient * 100.0));
         }
-        log.info("Team votes: " + team.votes);
+        log.info("Team votes: " + team.getVotes());
         log.info("Sum of votes: " + sum);
         log.info("Vote %: " + team.getVotePercentage());
-        return new TeamDTO(team.teamId, team.name, team.hackathon.getHackathonId(), team.members, team.votes, team.votePercentage, team.createdAt);
+        return new TeamDTO(team.getTeamId(), team.getName(), team.getHackathon().getHackathonId(),
+                team.getMembers(), team.getVotes(), team.getVotePercentage(), team.getCreatedAt());
     }
 }

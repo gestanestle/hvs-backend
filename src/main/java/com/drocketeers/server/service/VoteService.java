@@ -39,7 +39,7 @@ class VoteServiceImpl implements VoteService {
         User user = userService.getUserById(userId);
         Team team = teamService.getTeamById(teamId);
 
-        if (team.members.contains(user)) throw new ApiException(
+        if (team.getMembers().contains(user)) throw new ApiException(
                 HttpStatus.BAD_REQUEST, "Members cannot vote for their own team.");
 
         if (voteRepository.getVoteByHackathonAndUser(hackathonId, userId).isPresent()) throw new ApiException(
@@ -52,11 +52,16 @@ class VoteServiceImpl implements VoteService {
 
     @Override
     public Long getVote(Long hackathonId, Long userId) {
-        log.info("Voted for: " + hackathonId);
+        log.info("Voted at: " + hackathonId);
         log.info("Voted by: " + userId);
 
         boolean hasVote = voteRepository.getVoteByHackathonAndUser(hackathonId, userId).isPresent();
+        log.info("User has vote? " + hasVote);
 
-        return hasVote ? voteRepository.getVoteByHackathonAndUser(hackathonId, userId).get().votedFor.teamId : null;
+        if (!hasVote) throw new ApiException(HttpStatus.BAD_REQUEST, "User has not voted yet.");
+        Vote vote = voteRepository.getVoteByHackathonAndUser(hackathonId, userId).orElseThrow();
+        log.info("Voted for: " + vote);
+
+        return vote.getVotedFor().getTeamId();
     }
 }

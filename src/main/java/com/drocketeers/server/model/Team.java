@@ -18,17 +18,17 @@ public class Team {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long teamId;
-    public String name;
+    private Long teamId;
+    private String name;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "hackathon_id")
-    public Hackathon hackathon;
+    private Hackathon hackathon;
     @ManyToMany(fetch = FetchType.EAGER)
-    public Set<User> members;
-    public Integer votes;
+    private Set<User> members;
+    private Integer votes;
     @Transient
-    public Float votePercentage;
-    public LocalDateTime createdAt;
+    private Float votePercentage;
+    private LocalDateTime createdAt;
 
     public Team(String name, Hackathon hackathon, Set<User> members, Integer votes, LocalDateTime createdAt) {
         this.name = name;
