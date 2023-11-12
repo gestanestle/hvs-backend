@@ -6,7 +6,7 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${pg.host}:5432/daedalus
+    url: jdbc:postgresql://${pg.host}:54321/daedalus
     username: postgres
     password: postgres
 
@@ -24,7 +24,7 @@ spring:
         format_sql: true
 
 # Postgres host
-pg.host: localhost
+pg.host: 178.128.20.38
 
 # Logger configuration
 logging:
@@ -40,3 +40,13 @@ server:
   error:
     include-binding-errors: always
     include-message: always
+
+# Monitoring
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

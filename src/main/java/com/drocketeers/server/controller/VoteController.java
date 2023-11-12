@@ -25,7 +25,7 @@ public class VoteController {
     @GetMapping
     public ResponseEntity<Map<String, Long>> getVote(@RequestParam("hackathon") Long hackathonId,
                                                             @RequestParam("user") Long userId) {
-        long votedFor = voteService.getVote(hackathonId, userId);
+        Long votedFor = voteService.getVote(hackathonId, userId);
         return new ResponseEntity<>(Map.of("votedFor", votedFor), HttpStatus.OK);
     }
 }
