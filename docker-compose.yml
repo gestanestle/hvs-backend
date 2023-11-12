@@ -1,32 +1,32 @@
 version: '3.9'
 
 services:
-  hvs_pg:
-    container_name: hvs_pg
+  daedavote_pg:
+    container_name: daedavote_pg
     image: docker.io/postgres:15-alpine
     networks:
-      - hvs_backend-network
+      - daedavote_backend-network
     environment:
       - POSTGRES_DB=daedalus
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
-      - hvs_pg_data:/var/lib/postgresql/data
-  hvs_app:
-    container_name: hvs_app
-    image: gestanestle/server:1.2
+      - daedavote_pg_data:/var/lib/postgresql/data
+  daedavote_app:
+    container_name: daedavote_app
+    image: gestanestle/server:latest
     ports:
-      - "8080:8080"
+      - "8081:8080"
     networks:
-      - hvs_backend-network
+      - daedavote_backend-network
     environment:
-      - PG_HOST=hvs_pg
+      - PG_HOST=daedavote_pg
       - PG_PORT=5432
 
 networks:
-  hvs_backend-network:
-    name: hvs_backend-network
+  daedavote_backend-network:
+    name: daedavote_backend-network
 
 volumes:
-  hvs_pg_data:
-    name: hvs_pg_data
+  daedavote_pg_data:
+    name: daedavote_pg_data
