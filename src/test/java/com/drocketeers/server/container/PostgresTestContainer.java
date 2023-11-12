@@ -6,13 +6,13 @@ public class PostgresTestContainer extends PostgreSQLContainer<PostgresTestConta
 
     private static final String IMAGE_VERSION = "postgres:15-alpine" ;
     private static final String DB_NAME = "test";
-    private static PostgreSQLContainer container;
+    private static PostgreSQLContainer<?> container;
 
     public PostgresTestContainer() {
         super(IMAGE_VERSION);
     }
 
-    public static PostgreSQLContainer getInstance() {
+    public static PostgreSQLContainer<?> getInstance() {
         if (container == null) {
             container = new PostgresTestContainer().withDatabaseName(DB_NAME);
         }
