@@ -6,7 +6,7 @@ spring:
   # Database
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://${pg.host}:54321/daedalus
+    url: jdbc:postgresql://${pg.host}:${pg.port}/daedalus
     username: postgres
     password: postgres
 
@@ -25,6 +25,7 @@ spring:
 
 # Postgres host
 pg.host: 178.128.20.38
+pg.port: 54321
 
 # Logger configuration
 logging:

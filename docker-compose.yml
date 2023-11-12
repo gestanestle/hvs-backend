@@ -21,6 +21,7 @@ services:
       - hvs_backend-network
     environment:
       - PG_HOST=hvs_pg
+      - PG_PORT=5432
 
 networks:
   hvs_backend-network:
