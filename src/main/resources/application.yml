@@ -24,8 +24,8 @@ spring:
         format_sql: true
 
 # Postgres host
-pg.host: 178.128.20.38
-pg.port: 54321
+pg.host: localhost
+pg.port: 5432
 
 # Logger configuration
 logging:

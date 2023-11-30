@@ -6,7 +6,6 @@ import com.drocketeers.server.model.User;
 import com.drocketeers.server.repository.HackathonRepository;
 import com.drocketeers.server.repository.TeamRepository;
 import com.drocketeers.server.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
@@ -18,12 +17,17 @@ import java.time.Month;
 import java.util.*;
 
 @Configuration
-@RequiredArgsConstructor
 public class StartupRunner implements ApplicationRunner {
 
     private final UserRepository userRepository;
     private final HackathonRepository hackathonRepository;
     private final TeamRepository teamRepository;
+
+    public StartupRunner(UserRepository userRepository, HackathonRepository hackathonRepository, TeamRepository teamRepository) {
+        this.userRepository = userRepository;
+        this.hackathonRepository = hackathonRepository;
+        this.teamRepository = teamRepository;
+    }
 
     Logger log = LoggerFactory.getLogger(StartupRunner.class);
     @Override

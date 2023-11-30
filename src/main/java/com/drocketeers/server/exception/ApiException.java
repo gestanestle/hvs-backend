@@ -1,9 +1,8 @@
 package com.drocketeers.server.exception;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
-@Getter
+
 public class ApiException extends RuntimeException{
 
 
@@ -14,4 +13,7 @@ public class ApiException extends RuntimeException{
         this.status = status;
     }
 
+    public HttpStatus getStatus() {
+        return status;
+    }
 }

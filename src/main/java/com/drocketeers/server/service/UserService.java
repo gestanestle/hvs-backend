@@ -4,7 +4,6 @@ import com.drocketeers.server.dto.user.payload.UserData;
 import com.drocketeers.server.exception.ApiException;
 import com.drocketeers.server.model.User;
 import com.drocketeers.server.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +21,13 @@ public interface UserService {
 }
 
 @Service
-@RequiredArgsConstructor
 class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public void createUser(UserData userData) {

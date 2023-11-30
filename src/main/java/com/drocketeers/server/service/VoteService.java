@@ -7,8 +7,8 @@ import com.drocketeers.server.model.User;
 import com.drocketeers.server.model.Vote;
 import com.drocketeers.server.repository.VoteRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -19,15 +19,22 @@ public interface VoteService {
 }
 
 @Service
-@RequiredArgsConstructor
 @Transactional
-@Slf4j
 class VoteServiceImpl implements VoteService {
+
+    private static final Logger log = LoggerFactory.getLogger(VoteServiceImpl.class);
 
     private final HackathonService hackathonService;
     private final UserService userService;
     private final TeamService teamService;
     private final VoteRepository voteRepository;
+
+    public VoteServiceImpl(HackathonService hackathonService, UserService userService, TeamService teamService, VoteRepository voteRepository) {
+        this.hackathonService = hackathonService;
+        this.userService = userService;
+        this.teamService = teamService;
+        this.voteRepository = voteRepository;
+    }
 
     @Override
     public void setVote(Long hackathonId, Long userId, Long teamId) {

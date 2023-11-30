@@ -6,7 +6,6 @@ import com.drocketeers.server.model.Hackathon;
 import com.drocketeers.server.model.User;
 import com.drocketeers.server.repository.HackathonRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +21,15 @@ public interface HackathonService {
 
 @Service
 @Transactional
-@RequiredArgsConstructor
 class HackathonServiceImpl implements HackathonService{
 
     private final UserService userService;
     private final HackathonRepository hackathonRepository;
+
+    public HackathonServiceImpl(UserService userService, HackathonRepository hackathonRepository) {
+        this.userService = userService;
+        this.hackathonRepository = hackathonRepository;
+    }
 
     @Override
     public Hackathon getHackathonById(Long id) {

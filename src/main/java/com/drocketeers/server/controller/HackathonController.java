@@ -7,18 +7,21 @@ import com.drocketeers.server.dto.TeamList;
 import com.drocketeers.server.model.Hackathon;
 import com.drocketeers.server.service.HackathonService;
 import com.drocketeers.server.service.TeamService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/v1/hackathons")
-@RequiredArgsConstructor
 public class HackathonController {
 
     private final HackathonService hackathonService;
     private final TeamService teamService;
+
+    public HackathonController(HackathonService hackathonService, TeamService teamService) {
+        this.hackathonService = hackathonService;
+        this.teamService = teamService;
+    }
 
     @GetMapping
     ResponseEntity<Hackathons> getAllHackathons() {

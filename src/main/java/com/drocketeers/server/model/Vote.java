@@ -1,18 +1,10 @@
 package com.drocketeers.server.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import java.util.Objects;
 
 @Entity
 @Table(name = "VOTE")
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter @Setter
 public class Vote {
 
     @Id
@@ -31,6 +23,48 @@ public class Vote {
     public Vote(Hackathon hackathon, User votedBy, Team votedFor) {
         this.hackathon = hackathon;
         this.votedBy = votedBy;
+        this.votedFor = votedFor;
+    }
+
+    public Vote() {
+    }
+
+    public Vote(Long voteId, Hackathon hackathon, User votedBy, Team votedFor) {
+        this.voteId = voteId;
+        this.hackathon = hackathon;
+        this.votedBy = votedBy;
+        this.votedFor = votedFor;
+    }
+
+    public Long getVoteId() {
+        return voteId;
+    }
+
+    public void setVoteId(Long voteId) {
+        this.voteId = voteId;
+    }
+
+    public Hackathon getHackathon() {
+        return hackathon;
+    }
+
+    public void setHackathon(Hackathon hackathon) {
+        this.hackathon = hackathon;
+    }
+
+    public User getVotedBy() {
+        return votedBy;
+    }
+
+    public void setVotedBy(User votedBy) {
+        this.votedBy = votedBy;
+    }
+
+    public Team getVotedFor() {
+        return votedFor;
+    }
+
+    public void setVotedFor(Team votedFor) {
         this.votedFor = votedFor;
     }
 

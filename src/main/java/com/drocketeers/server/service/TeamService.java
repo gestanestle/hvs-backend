@@ -4,8 +4,8 @@ import com.drocketeers.server.dto.TeamDTO;
 import com.drocketeers.server.model.Team;
 import com.drocketeers.server.repository.TeamRepository;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,12 +21,16 @@ public interface TeamService {
 }
 
 @Service
-@RequiredArgsConstructor
 @Transactional
-@Slf4j
 class TeamServiceImpl implements TeamService {
 
+    private static final Logger log = LoggerFactory.getLogger(TeamServiceImpl.class);
+
     private final TeamRepository teamRepository;
+
+    public TeamServiceImpl(TeamRepository teamRepository) {
+        this.teamRepository = teamRepository;
+    }
 
     @Override
     public List<TeamDTO> getAllTeams(Long hackathonId) {
