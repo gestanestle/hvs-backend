@@ -2,6 +2,8 @@
 
 This backend service serves as the infrastructure for a hackathon voting system.
 
+Link for the frontend repository: https://github.com/gestanestle/voting-system.git 
+
 ## Usage
 1. Clone the project repository: \
    ```git clone https://github.com/gestanestle/hvs-backend.git```
